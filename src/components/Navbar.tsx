@@ -1,4 +1,4 @@
-export const Navber = () => {
+export const Navbar = () => {
   return (
     <nav className="bg-gray-950 border border-gray-800 text-white">
       ポケモン図鑑
