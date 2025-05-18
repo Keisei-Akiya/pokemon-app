@@ -8,21 +8,25 @@ export function Pokedex() {
   const initialURL: string = 'https://pokeapi.co/api/v2/pokemon/';
   const [loading, setLoading] = useState<boolean>(true);
   const [pokemonData, setPokemonData] = useState<PokemonItem[]>([]);
+  const [nextURL, setNextURL] = useState<string | null>(null);
+  const [prevURL, setPrevURL] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPokemonData = async (): Promise<void> => {
       // すべてのポケモンデータを取得
-      const res: PokemonResponse = await getAllPokemon(initialURL);
+      let res: PokemonResponse = await getAllPokemon(initialURL);
       // 各ポケモンの詳細なデータを取得
       loadPokemon(res.results);
+      setNextURL(res.next);
+      setPrevURL(res.previous);
       setLoading(false);
     };
     fetchPokemonData();
   }, []);
 
   const loadPokemon = async (data: PokemonItem[]) => {
-    const _pokemonData: PokemonItem[] = await Promise.all(
-      data.map(pokemon => {
+    let _pokemonData: PokemonItem[] = await Promise.all(
+      data.map((pokemon) => {
         const pokemonRecord = getPokemon(pokemon.url);
         return pokemonRecord;
       }),
@@ -33,7 +37,23 @@ export function Pokedex() {
   const handleNextPage = async () => {
     // 次のページのポケモンデータを取得
     setLoading(true);
-    const data = await getAllPokemon(initialURL);
+    let data: PokemonResponse = await getAllPokemon(nextURL as string);
+    await loadPokemon(data.results);
+    setNextURL(data.next);
+    setPrevURL(data.previous);
+    setLoading(false);
+  };
+
+  const handlePrevPage = async () => {
+    // 前のページのポケモンデータを取得
+    // prevURLがnullの場合は何もしない
+    if (!prevURL) return;
+
+    setLoading(true);
+    let data: PokemonResponse = await getAllPokemon(prevURL as string);
+    await loadPokemon(data.results);
+    setPrevURL(data.previous);
+    setLoading(false);
   };
 
   return (
@@ -45,7 +65,11 @@ export function Pokedex() {
     >
       {loading ? (
         // ローディング中の表示
-        <h1 className="text-2xl font-bold text-white">Loading...</h1>
+        <div className="flex flex-col items-center justify-center py-10">
+          {/* ローディングスピナー */}
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          <h1 className="text-2xl font-bold text-white">Loading...</h1>
+        </div>
       ) : (
         // ロード完了後のポケモンデータ表示
         <>
@@ -54,10 +78,23 @@ export function Pokedex() {
               return <Card key={i} pokemon={pokemon} />;
             })}
           </div>
+          {/* 左側がTrueなら右が表示される */}
+          {pokemonData.length > 0 && (
+            <div className="flex gap-4 mt-4">
+              <Button
+                text="前へ"
+                onClick={handlePrevPage}
+                disabled={prevURL === null}
+              />
+              <Button
+                text="次へ"
+                onClick={handleNextPage}
+                disabled={nextURL === null}
+              />
+            </div>
+          )}
         </>
       )}
-      <Button onClick={handlePrevPage}>前へ</Button>
-      <Button onClick={handleNextPage}>次へ</Button>
     </div>
   );
 }
