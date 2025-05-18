@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { getAllPokemon, getPokemon } from '../utils/pokemon';
-import type { PokemonItem, PokemonResponse } from '../types/pokemon';
-import Card from './Card/Card';
+import { getAllPokemon, getPokemon } from '@/utils/pokemon';
+import type { PokemonItem, PokemonResponse } from '@/types/pokemon';
+import Card from '@/components/Card/Card';
 
-function Pokedex() {
+export function Pokedex() {
   const initialURL: string = 'https://pokeapi.co/api/v2/pokemon/';
   const [loading, setLoading] = useState<boolean>(true);
   const [pokemonData, setPokemonData] = useState<PokemonItem[]>([]);
@@ -54,5 +54,3 @@ function Pokedex() {
     </div>
   );
 }
-
-export default Pokedex;

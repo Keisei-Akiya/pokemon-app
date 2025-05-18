@@ -1,4 +1,4 @@
-import type { PokemonItem, PokemonResponse } from '../types/pokemon';
+import type { PokemonItem, PokemonResponse } from '@/types/pokemon';
 
 // ポケモンのデータを取得する関数
 export function getAllPokemon(url: string): Promise<PokemonResponse> {
