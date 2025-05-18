@@ -1,10 +1,10 @@
-import type { PokemonItem } from '../../types/pokemon';
+import type { PokemonItem } from '../types/pokemon';
 
 type CardProps = {
   pokemon: PokemonItem;
 };
 
-const Card = ({ pokemon }: CardProps) => {
+export const Card = ({ pokemon }: CardProps) => {
   return (
     <div className="text-left bg-transparent text-slate-50 rounded-xl shadow-lg p-4 flex flex-col hover:scale-105 transition-transform border border-gray-800">
       <h3 className="text-2xl font-extrabold text-center drop-shadow-lg tracking-wide mb-3 uppercase">
@@ -44,5 +44,3 @@ const Card = ({ pokemon }: CardProps) => {
     </div>
   );
 };
-
-export default Card;

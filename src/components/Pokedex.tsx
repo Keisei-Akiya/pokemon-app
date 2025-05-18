@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getAllPokemon, getPokemon } from '@/utils/pokemon';
 import type { PokemonItem, PokemonResponse } from '@/types/pokemon';
-import Card from '@/components/Card/Card';
+import { Card } from '@/components/Card';
+import { Button } from '@/components/Button';
 
 export function Pokedex() {
   const initialURL: string = 'https://pokeapi.co/api/v2/pokemon/';
@@ -29,7 +30,11 @@ export function Pokedex() {
     setPokemonData(_pokemonData);
   };
 
-  console.log(pokemonData);
+  const handleNextPage = async () => {
+    // 次のページのポケモンデータを取得
+    setLoading(true);
+    const data = await getAllPokemon(initialURL);
+  };
 
   return (
     <div
@@ -51,6 +56,8 @@ export function Pokedex() {
           </div>
         </>
       )}
+      <Button onClick={handlePrevPage}>前へ</Button>
+      <Button onClick={handleNextPage}>次へ</Button>
     </div>
   );
 }
