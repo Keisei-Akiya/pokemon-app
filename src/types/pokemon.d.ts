@@ -1,0 +1,9 @@
+import { z } from 'zod';
+import * as schemas from '@/schemas/pokemonSchema';
+export type Ability = z.infer<typeof schemas.AbilitySchema>;
+export type Species = z.infer<typeof schemas.SpeciesSchema>;
+export type Sprites = z.infer<typeof schemas.SpritesSchema>;
+export type Stat = z.infer<typeof schemas.StatSchema>;
+export type Type = z.infer<typeof schemas.TypeSchema>;
+export type PokemonItem = z.infer<typeof schemas.PokemonItemSchema>;
+export type PokemonResponse = z.infer<typeof schemas.PokemonResponseSchema>;

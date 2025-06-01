@@ -1,12 +1,11 @@
 {
   "files": [],
-  "include": ["src", "vitest-setup.ts"],
+  "include": ["src"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    },
-    "types": ["vitest/globals"]
+    }
   },
   "references": [
     { "path": "./tsconfig.app.json" },
