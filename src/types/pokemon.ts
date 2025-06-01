@@ -1,65 +1,16 @@
-export interface PokemonResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: PokemonItem[];
-}
+import { z } from 'zod';
+import * as schemas from '@/schemas/pokemonSchema';
 
-export interface PokemonItem {
-  name: string;
-  url: string;
-  abilities: Ability[];
-  base_experience: number;
-  height: number;
-  id: number;
-  is_default: boolean;
-  location_area_encounters: string;
-  order: number;
-  species: Species;
-  sprites: Sprites;
-  stats: Stat[];
-  types: Type[];
-  weight: number;
-}
+export type Ability = z.infer<typeof schemas.AbilitySchema>;
 
-interface Ability {
-  ability: {
-    name: string;
-    url: string;
-    is_hidden: boolean;
-    slot: number;
-  };
-}
+export type Species = z.infer<typeof schemas.SpeciesSchema>;
 
-interface Species {
-  name: string;
-  url: string;
-}
+export type Sprites = z.infer<typeof schemas.SpritesSchema>;
 
-interface Sprites {
-  back_default: string;
-  back_female: string;
-  back_shiny: string;
-  back_shiny_female: string;
-  front_default: string;
-  front_female: string;
-  front_shiny: string;
-  front_shiny_female: string;
-}
+export type Stat = z.infer<typeof schemas.StatSchema>;
 
-interface Stat {
-  base_stat: number;
-  effort: number;
-  stat: {
-    name: string;
-    url: string;
-  };
-}
+export type Type = z.infer<typeof schemas.TypeSchema>;
 
-interface Type {
-  slot: number;
-  type: {
-    name: string;
-    url: string;
-  };
-}
+export type PokemonItem = z.infer<typeof schemas.PokemonItemSchema>;
+
+export type PokemonResponse = z.infer<typeof schemas.PokemonResponseSchema>;
